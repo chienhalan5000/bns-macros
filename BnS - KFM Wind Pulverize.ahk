@@ -9,6 +9,8 @@ SetWinDelay(-1)
 
 #Include %A_ScriptDir%\lib\utilityv2.ahk
 
+logFile := A_ScriptDir "\key_log.txt"  ; Define the log file path
+
 ^F10::Reload()
 ^F11::Pause()
 ^F12::ExitApp()
@@ -24,29 +26,39 @@ $RButton::{
 class Availability
 {
     static IsPulverizeAvailable() {
-        return Utility.GetColor(1458, 413) == 0xfcf3eb
+        color := Utility.GetColor(1458, 413)
+        return (color >= 0xf2e9e1 && color <= 0xfffdf5) ; check if color is within the range of Pulverize available +/- 10 base color 0xfcf3eb
     }
 }
 
 ; skill bindings
 class Skills {
+    static LogKey(key, seperator := ">") {
+        FileAppend(key " " seperator " ", logFile)  ; Append key and delay to the log file
+    }
+
     static RMB() {
+        Skills.LogKey("2")
         Send "t"
     }
 
     static LMB() {
+        Skills.LogKey("r")
         Send "r"
     }
 
     static SwiftStrike() {
+        Skills.LogKey("2")
         Send "2"
     }
 
     static CycloneKick() {
+        Skills.LogKey("f")
         Send "f"
     }
 
     static Pulverize() {
+        Skills.LogKey("f")
         Send "f"
     }
 }
@@ -69,12 +81,10 @@ class Rotations
     ; full rotation with situational checks
     static FullRotation() {
         if (Availability.IsPulverizeAvailable()) {
-            while (Availability.IsPulverizeAvailable() && Utility.GameActive() && (GetKeyState("RButton", "P") || GetKeyState("XButton2", "P"))) {
-                Skills.LMB()
-                Sleep 280
-                Skills.Pulverize()
-                Sleep 280
-            }
+            Skills.LMB()
+            Sleep 280
+            Skills.Pulverize()
+            Sleep 280
         }
 
         Rotations.Default()
