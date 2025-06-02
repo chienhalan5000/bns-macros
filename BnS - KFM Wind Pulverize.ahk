@@ -38,7 +38,7 @@ class Skills {
     }
 
     static RMB() {
-        Skills.LogKey("2")
+        Skills.LogKey("t")
         Send "t"
     }
 
