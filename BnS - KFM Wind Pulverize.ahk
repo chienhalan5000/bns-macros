@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 
 ListLines(false)
-ProcessSetPriority("A")
+ProcessSetPriority("R")
 SetKeyDelay(-1, -1)
 SetMouseDelay(-1)
 SetDefaultMouseSpeed(0)
@@ -17,7 +17,7 @@ logFile := A_ScriptDir "\key_log.txt"  ; Define the log file path
 
 ; #HotIf WinActive("ahk_class UnrealWindow")
 $XButton2::{
-    while (Utility.GameActive() && GetKeyState("XButton2", "P")) {
+    while (Utility.GameActive() && Utility.IsXButton2OnHold()) {
         Rotations.FullRotation()
     }
 }
@@ -26,50 +26,50 @@ $XButton2::{
 class Availability
 {
     static IsPulverizeAvailable() {
-        color := Utility.GetColor(1610, 795)
-        return (color == 0xFACCBB) ; check if color is within the range of Pulverize available +/- 10 base color 0xdec9c4
+        color := Utility.GetColor(1615, 795)
+        return (color == 0xDC8B7E)
     }
 }
 
 ; skill bindings
 class Skills {
     static RMB() {
-        if(!Utility.IsRButtonOnHold())
+        if(!Utility.IsXButton2OnHold())
             return
 
-        Utility.LogKey("t")
+        ; Utility.LogKey("t")
         Send "t"
     }
 
     static LMB() {
-        if(!Utility.IsRButtonOnHold())
+        if(!Utility.IsXButton2OnHold())
             return
 
-        Utility.LogKey("r")
+        ; Utility.LogKey("r")
         Send "r"
     }
 
     static SwiftStrike() {
-        if(!Utility.IsRButtonOnHold())
+        if(!Utility.IsXButton2OnHold())
             return
 
-        Utility.LogKey("2")
+        ; Utility.LogKey("2")
         Send "2"
     }
 
     static CycloneKick() {
-        if(!Utility.IsRButtonOnHold())
+        if(!Utility.IsXButton2OnHold())
             return
 
-        Utility.LogKey("f")
+        ; Utility.LogKey("f")
         Send "f"
     }
 
     static Pulverize() {
-        if(!Utility.IsRButtonOnHold())
+        if(!Utility.IsXButton2OnHold())
             return
 
-        Utility.LogKey("f")
+        Utility.LogKey("f (pul)")
         Send "f"
     }
 }
@@ -80,25 +80,27 @@ class Rotations
     ; default rotation without any logic for max counts
     static Default() {
         Skills.SwiftStrike()
-        Sleep 280
-            
+        Sleep 290
+
         Skills.LMB()
-        Sleep 280
+        Sleep 290
             
         Skills.CycloneKick()
-        Sleep 280
+
+        Sleep 330
+
+        if (Availability.IsPulverizeAvailable()) {
+                
+            Skills.Pulverize()
+            Sleep 330
+            ; Skills.LMB()2
+            ; Sleep 300
+
+        }
     }
 
     ; full rotation with situational checks
     static FullRotation() {
-        if (Availability.IsPulverizeAvailable()) {
-            Skills.LMB()
-            Sleep 280
-                
-            Skills.Pulverize()
-            Sleep 280
-        }
-
         Rotations.Default()
     }
 }

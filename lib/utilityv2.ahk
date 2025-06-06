@@ -8,18 +8,9 @@ class Utility
 {
     ; return the color at the passed position
     static GetColor(x, y)
-    static GetColor(x, y)
     {
-        color := PixelGetColor(x, y, "RGB")
-        if IsSet(red) {
-            red := (color & 0xFF0000) >> 16
-        }
-        if IsSet(green) {
-            green := (color & 0xFF00) >> 8
-        }
-        if IsSet(blue) {
-            blue := color & 0xFF
-        }
+        color := PixelGetColor(x, y)
+        Utility.LogKey(color)
         return color
     }
 
