@@ -33,32 +33,45 @@ class Availability
 
 ; skill bindings
 class Skills {
-    static LogKey(key, seperator := ">") {
-        FileAppend(key " " seperator " ", logFile)  ; Append key and delay to the log file
-    }
+    
 
     static RMB() {
-        Skills.LogKey("t")
+        if(!Utility.IsRButtonOnHold())
+            return
+
+        Utility.LogKey("t")
         Send "t"
     }
 
     static LMB() {
-        Skills.LogKey("r")
+        if(!Utility.IsRButtonOnHold())
+            return
+
+        Utility.LogKey("r")
         Send "r"
     }
 
     static SwiftStrike() {
-        Skills.LogKey("2")
+        if(!Utility.IsRButtonOnHold())
+            return
+
+        Utility.LogKey("2")
         Send "2"
     }
 
     static CycloneKick() {
-        Skills.LogKey("f")
+        if(!Utility.IsRButtonOnHold())
+            return
+
+        Utility.LogKey("f")
         Send "f"
     }
 
     static Pulverize() {
-        Skills.LogKey("f")
+        if(!Utility.IsRButtonOnHold())
+            return
+
+        Utility.LogKey("f")
         Send "f"
     }
 }
@@ -70,12 +83,12 @@ class Rotations
     static Default() {
         Skills.SwiftStrike()
         Sleep 280
+            
         Skills.LMB()
         Sleep 280
+            
         Skills.CycloneKick()
         Sleep 280
-
-        return
     }
 
     ; full rotation with situational checks
@@ -83,6 +96,7 @@ class Rotations
         if (Availability.IsPulverizeAvailable()) {
             Skills.LMB()
             Sleep 280
+                
             Skills.Pulverize()
             Sleep 280
         }

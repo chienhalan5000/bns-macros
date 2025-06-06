@@ -7,18 +7,12 @@ SetWorkingDir A_ScriptDir
 class Utility
 {
     ; return the color at the passed position
-    static GetColor(x, y, &red?, &green?, &blue?)
+    static GetColor(x, y)
     {
-        color := PixelGetColor(x, y, "RGB")
-        if IsSet(red) {
-            red := (color & 0xFF0000) >> 16
-        }
-        if IsSet(green) {
-            green := (color & 0xFF00) >> 8
-        }
-        if IsSet(blue) {
-            blue := color & 0xFF
-        }
+        color := PixelGetColor(x, y)
+        ; Tooltip('Red: 0x' SubStr(color, 3, 2)
+        ; '`nGreen: 0x' SubStr(color, 5, 2)
+        ; '`nBlue: 0x' SubStr(color, 7, 2))
         return color
     }
 
@@ -26,5 +20,14 @@ class Utility
     static GameActive()
     {
         return true
+    }
+
+    static IsRButtonOnHold()
+    {
+        return GetKeyState("RButton", "P")
+    }
+
+    static LogKey(key, seperator := ">") {
+        FileAppend(key " " seperator " ", logFile)  ; Append key and delay to the log file
     }
 }
