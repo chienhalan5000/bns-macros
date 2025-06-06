@@ -16,8 +16,8 @@ logFile := A_ScriptDir "\key_log.txt"  ; Define the log file path
 ^F12::ExitApp()
 
 ; #HotIf WinActive("ahk_class UnrealWindow")
-$RButton::{
-    while (Utility.GameActive() && GetKeyState("RButton", "P")) {
+$XButton2::{
+    while (Utility.GameActive() && GetKeyState("XButton2", "P")) {
         Rotations.FullRotation()
     }
 }
@@ -26,15 +26,13 @@ $RButton::{
 class Availability
 {
     static IsPulverizeAvailable() {
-        color := Utility.GetColor(1458, 413)
-        return (color >= 0xf2e9e1 && color <= 0xfffdf5) ; check if color is within the range of Pulverize available +/- 10 base color 0xfcf3eb
+        color := Utility.GetColor(1610, 795)
+        return (color == 0xFACCBB) ; check if color is within the range of Pulverize available +/- 10 base color 0xdec9c4
     }
 }
 
 ; skill bindings
 class Skills {
-    
-
     static RMB() {
         if(!Utility.IsRButtonOnHold())
             return
