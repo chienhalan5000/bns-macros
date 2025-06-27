@@ -7,9 +7,9 @@ SetMouseDelay(-1)
 SetDefaultMouseSpeed(0)
 SetWinDelay(-1)
 
-#Include %A_ScriptDir%\lib\utilityv2.ahk
+#Include %A_ScriptDir%\lib\utility.ahk
 
-logFile := A_ScriptDir "\key_log.txt"  ; Define the log file path
+logFile := A_ScriptDir "\log.txt"  ; Define the log file path
 
 ^F10::Reload()
 ^F11::Pause()
@@ -37,7 +37,7 @@ class Skills {
         if(!Utility.IsXButton2OnHold())
             return
 
-        ; Utility.LogKey("t")
+        ; Utility.Log("t")
         Send "t"
     }
 
@@ -45,7 +45,7 @@ class Skills {
         if(!Utility.IsXButton2OnHold())
             return
 
-        ; Utility.LogKey("r")
+        ; Utility.Log("r")
         Send "r"
     }
 
@@ -53,7 +53,7 @@ class Skills {
         if(!Utility.IsXButton2OnHold())
             return
 
-        ; Utility.LogKey("2")
+        ; Utility.Log("2")
         Send "2"
     }
 
@@ -61,7 +61,7 @@ class Skills {
         if(!Utility.IsXButton2OnHold())
             return
 
-        ; Utility.LogKey("f")
+        ; Utility.Log("f")
         Send "f"
     }
 
@@ -69,7 +69,7 @@ class Skills {
         if(!Utility.IsXButton2OnHold())
             return
 
-        Utility.LogKey("f (pul)")
+        Utility.Log("f (pul)")
         Send "f"
     }
 }
