@@ -31,6 +31,8 @@ class Utility
     }
 
     static Log(key, seperator := ">") {
+        logFile := A_ScriptDir "\log.txt"  ; Define the log file path
+
         FileAppend(key " " seperator " ", logFile)
     }
 }

@@ -21,11 +21,33 @@ $XButton2::{
 }
 
 ; everything related to checking availability of skills or procs
-class Availability
+class CriticalAvailability
 {
-    static IsPulverizeAvailable() {
-        color := Utility.GetColor(1615, 795)
-        return (color == 0xDC8B7E)
+    static IsLunarSlashCrit() {
+        coords := [
+            {x: 256, y: 952},
+            {x: 255, y: 955},
+            {x: 255, y: 956},
+            {x: 255, y: 957},
+            {x: 255, y: 958},
+            {x: 256, y: 960},
+            {x: 258, y: 962},
+            {x: 259, y: 962},
+            {x: 261, y: 962},
+            {x: 263, y: 961},
+        ]
+
+        ; Iterate through the coordinates
+        for coord in coords {
+            color := Utility.GetColor(coord.x, coord.y)
+            if (color != 0xFF9700) {
+                Utility.Log("tab crit false, color: " color . " at coords: " coord.x ", " coord.y, "`n")
+                return false  ; Return false if any color doesn't match
+            }
+        }
+
+        Utility.Log("tab crit true", "`n")
+        return true  ; Return true if all colors match
     }
 }
 
@@ -47,29 +69,14 @@ class Skills {
         Send "r"
     }
 
-    static SwiftStrike() {
+    static Tab() {
         if(!Utility.IsXButton2OnHold())
             return
 
-        ; Utility.Log("2")
-        Send "2"
+        ; Utility.Log("r")
+        Send "{Tab}"
     }
 
-    static CycloneKick() {
-        if(!Utility.IsXButton2OnHold())
-            return
-
-        ; Utility.Log("f")
-        Send "f"
-    }
-
-    static Pulverize() {
-        if(!Utility.IsXButton2OnHold())
-            return
-
-        Utility.Log("f (pul)")
-        Send "f"
-    }
 }
 
 ; everything rotation related
@@ -77,23 +84,15 @@ class Rotations
 {
     ; default rotation without any logic for max counts
     static Default() {
-        Skills.SwiftStrike()
-        Sleep 290
-
         Skills.LMB()
-        Sleep 290
-            
-        Skills.CycloneKick()
+        Sleep 270
 
-        Sleep 330
+        Skills.Tab()
+        Sleep 270
 
-        if (Availability.IsPulverizeAvailable()) {
-                
-            Skills.Pulverize()
-            Sleep 330
-            ; Skills.LMB()2
-            ; Sleep 300
-
+        if(CriticalAvailability.IsLunarSlashCrit()) {
+            Skills.RMB()
+            Sleep 250
         }
     }
 
